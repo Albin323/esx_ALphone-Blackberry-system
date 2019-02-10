@@ -239,7 +239,7 @@ AddEventHandler('esx_phone:endCall', function(msg)
 	})
 
 	NetworkClearVoiceChannel()
-	NetworkSetTalkerProximity(0.0)
+	NetworkSetTalkerProximity(2.5)
 
 end)
 
