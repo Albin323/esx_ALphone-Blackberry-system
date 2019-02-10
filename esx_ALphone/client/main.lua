@@ -55,7 +55,7 @@ function OpenPhone()
 			Citizen.Wait(0)
 		end
 
-		TaskPlayAnim(playerPed, 'cellphone@', 'cellphone_call_listen_base', 1.0, -1, -1, 50, 0, false, false, false)
+		TaskPlayAnim(playerPed, 'cellphone@', 'cellphone_text_read_base', 1.0, -1, -1, 50, 0, false, false, false)
 
 		ESX.Game.SpawnObject(phoneModel, coords, function(object)
 			AttachEntityToEntity(object, playerPed, bone, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, false, false, 2, true)
@@ -199,7 +199,25 @@ AddEventHandler('esx_phone:onAcceptCall', function(channel, target)
 	})
 
 	NetworkSetVoiceChannel(channel)
-	NetworkSetTalkerProximity(0.0)
+	NetworkSetTalkerProximity(2.5)
+	end)
+	local playerPed  = PlayerPedId()
+	local coords     = GetEntityCoords(playerPed)
+	local bone       = GetPedBoneIndex(playerPed, 28422)
+	local phoneModel = 'prop_npc_phone_02'
+
+	Citizen.CreateThread(function()
+		RequestAnimDict('cellphone@')
+		while not HasAnimDictLoaded('cellphone@') do
+			Citizen.Wait(0)
+		end
+
+		TaskPlayAnim(playerPed, 'cellphone@', 'cellphone_text_read_base', 1.0, -1, -1, 50, 0, false, false, false)
+
+		ESX.Game.SpawnObject(phoneModel, coords, function(object)
+			AttachEntityToEntity(object, playerPed, bone, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, false, false, 2, true)
+			CellphoneObject = object
+	end)
 end)
 
 
@@ -222,6 +240,7 @@ AddEventHandler('esx_phone:endCall', function(msg)
 
 	NetworkClearVoiceChannel()
 	NetworkSetTalkerProximity(2.5)
+
 end)
 
 RegisterNetEvent('esx:setAccountMoney')
@@ -250,6 +269,25 @@ RegisterNUICallback('start_call', function(data, cb)
 	CallStartTime = GetPosixTime()
 	TriggerServerEvent('esx_phone:startCall', data.number)
 	cb('OK')
+	
+	local playerPed  = PlayerPedId()
+	local coords     = GetEntityCoords(playerPed)
+	local bone       = GetPedBoneIndex(playerPed, 28422)
+	local phoneModel = 'prop_npc_phone_02'
+
+	Citizen.CreateThread(function()
+		RequestAnimDict('cellphone@')
+		while not HasAnimDictLoaded('cellphone@') do
+			Citizen.Wait(0)
+		end
+
+		TaskPlayAnim(playerPed, 'cellphone@', 'cellphone_call_listen_base', 1.0, -1, -1, 50, 0, false, false, false)
+
+		ESX.Game.SpawnObject(phoneModel, coords, function(object)
+			AttachEntityToEntity(object, playerPed, bone, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, false, false, 2, true)
+			CellphoneObject = object
+		end)
+	end)
 end)
 
 RegisterNUICallback('accept_call', function(data, cb)
@@ -259,11 +297,49 @@ RegisterNUICallback('accept_call', function(data, cb)
 	NetworkSetVoiceChannel(data.channel)
 	NetworkSetTalkerProximity(0.0)
 	cb('OK')
+
+	local playerPed  = PlayerPedId()
+	local coords     = GetEntityCoords(playerPed)
+	local bone       = GetPedBoneIndex(playerPed, 28422)
+	local phoneModel = 'prop_npc_phone_02'
+
+	Citizen.CreateThread(function()
+		RequestAnimDict('cellphone@')
+		while not HasAnimDictLoaded('cellphone@') do
+			Citizen.Wait(0)
+		end
+
+		TaskPlayAnim(playerPed, 'cellphone@', 'cellphone_call_listen_base', 1.0, -1, -1, 50, 0, false, false, false)
+
+		ESX.Game.SpawnObject(phoneModel, coords, function(object)
+			AttachEntityToEntity(object, playerPed, bone, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, false, false, 2, true)
+			CellphoneObject = object
+		end)
+	end)
 end)
 
 RegisterNUICallback('end_call', function(data, cb)
 	TriggerServerEvent('esx_phone:endCall', data.channel, data.target)
 	cb('OK')
+
+	local playerPed  = PlayerPedId()
+	local coords     = GetEntityCoords(playerPed)
+	local bone       = GetPedBoneIndex(playerPed, 28422)
+	local phoneModel = 'prop_npc_phone_02'
+
+	Citizen.CreateThread(function()
+		RequestAnimDict('cellphone@')
+		while not HasAnimDictLoaded('cellphone@') do
+			Citizen.Wait(0)
+		end
+
+		TaskPlayAnim(playerPed, 'cellphone@', 'cellphone_text_read_base', 1.0, -1, -1, 50, 0, false, false, false)
+
+		ESX.Game.SpawnObject(phoneModel, coords, function(object)
+			AttachEntityToEntity(object, playerPed, bone, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, false, false, 2, true)
+			CellphoneObject = object
+		end)
+	end)
 end)
 
 RegisterNUICallback('send', function(data)
